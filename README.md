@@ -40,6 +40,12 @@ To faciliate testing and easy setup the following directories are created and ow
 * `/var/www/behatdata`
 * `/var/www/behatfaildumps`
 
+# Modify php.ini
+
+docker container ls (to get webserver container name)
+docker container exec -it moodle-docker_webserver_1 bash
+sed -i "s/upload_max_filesize = .*/upload_max_filesize = 100M/" /usr/local/etc/php/php.ini
+sed -i "s/post_max_size = .*/post_max_size = 100M/" /usr/local/etc/php/php.ini
 
 # See also
 This container is part of a set of containers for Moodle development, see also:
