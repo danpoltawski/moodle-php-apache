@@ -40,6 +40,13 @@ To faciliate testing and easy setup the following directories are created and ow
 * `/var/www/behatdata`
 * `/var/www/behatfaildumps`
 
+# Xdebug
+
+For development, the image contains the Xdebug PHP extension. This is disabled by default, for performance reasons, but can be enabled by setting a non-empty XDEBUG_CONFIG environment variable. This environment variable is also used by Xdebug for configuration (see [XDebug documentation](https://xdebug.org/docs) for details and available configuration settings).
+
+```bash
+$ docker run --name web0 -p 8080:80  -v $PWD:/var/www/html -e XDEBUG_CONFIG="remote_enable=1 remote_connect_back=1" moodlehq/moodle-php-apache:7.1
+```
 
 # See also
 This container is part of a set of containers for Moodle development, see also:

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+if [ -z "${XDEBUG_CONFIG}" ]; then
+    rm -f $XDEBUG_INI_FILE
+else
+    if [ ! -e $XDEBUG_INI_FILE ]; then
+        # Enable the extension.
+        echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > $XDEBUG_INI_FILE
+        # Configure the main settings, keeping features disabled.
+        cat <<EOF >> $XDEBUG_INI_FILE
+# Code coverage.
+xdebug.coverage_enable = 0
+# Stack trace.
+xdebug.default_enable = 0
+# Remote debug.
+xdebug.remote_enable = 0
+xdebug.remote_host = localhost
+xdebug.remote_port = 9000
+xdebug.remote_autostart = 1
+# Profiling: https://docs.moodle.org/dev/Profiling_PHP#Quick_summary
+xdebug.profiler_enable = 0
+xdebug.profiler_enable_trigger = 0
+xdebug.profiler_output_dir = /tmp
+xdebug.profiler_output_name = cachegrind.out.%R.%u
+EOF
+    fi
+fi
+
+/usr/local/bin/docker-php-entrypoint "$@"

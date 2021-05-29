@@ -73,6 +73,8 @@ echo 'apc.enable_cli = On' >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
 # before some build packages are deleted)
 /tmp/setup/sqlsrv-extension.sh
 
+pecl install xdebug-2.6.1
+
 # Keep our image size down..
 pecl clear-cache
 apt-get remove --purge -y $BUILD_PACKAGES
