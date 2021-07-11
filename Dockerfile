@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
 
 # Setup the required extensions.
 ARG DEBIAN_FRONTEND=noninteractive
+RUN /tmp/setup/python-mlbackend.sh
 RUN /tmp/setup/php-extensions.sh
 RUN /tmp/setup/oci8-extension.sh
 ENV LD_LIBRARY_PATH /usr/local/instantclient
